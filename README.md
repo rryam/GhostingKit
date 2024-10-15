@@ -1,2 +1,1 @@
-# PhantomKit
-Unofficial Swift SDK for Ghost API
+# PhantomKit: Unofficial Swift SDK for Ghost API 👻
