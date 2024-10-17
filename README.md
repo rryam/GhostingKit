@@ -1,6 +1,6 @@
-# PhantomKit: Unofficial Swift SDK for Ghost API 👻
+# GhostingKit: Unofficial Swift SDK for Ghost API 👻
 
-PhantomKit is an unofficial Swift SDK for the Ghost Content API to interact with Ghost blogs, allowing you to fetch posts, pages, tags, and authors detail. I was learning about Phantom Types in Swift when learning about the Ghost Content API, and that is how I came with the name PhantomKit.
+GhostingKit is an unofficial Swift SDK for the Ghost Content API to interact with Ghost blogs, allowing you to fetch posts, pages, tags, and authors detail. I was learning about Phantom Types in Swift when learning about the Ghost Content API, and that is how I came with the name PhantomKit. Then, a week later, I had a thought about how recruiters ghosted me during my internship hunt so I renamed this library to GhostingKit. 
 
 - [Features](#features)
 - [Installation](#installation)
@@ -25,11 +25,11 @@ PhantomKit is an unofficial Swift SDK for the Ghost Content API to interact with
 
 ### Swift Package Manager
 
-You can add PhantomKit to your project using Swift Package Manager. Add the following line to your `Package.swift` file:
+You can add GhostingKit to your project using Swift Package Manager. Add the following line to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/rryam/PhantomKit.git", from: "0.1.0")
+    .package(url: "https://github.com/rryam/GhostingKit.git", from: "0.1.0")
 ]
 ```
 
@@ -37,16 +37,16 @@ Or add it directly in Xcode using File > Add Packages and enter the repository U
 
 ## Usage
 
-Import PhantomKit in your Swift file:
+Import GhostingKit in your Swift file:
 
 ```swift
-import PhantomKit
+import GhostingKit
 ```
 
-Then, create an instance of `PhantomKit` with your Ghost site's admin domain and Content API key:
+Then, create an instance of `GhostingKit` with your Ghost site's admin domain and Content API key:
 
 ```swift
-let phantomKit = PhantomKit(
+let ghostingKit = GhostingKit(
     adminDomain: "your-site.ghost.io",
     apiKey: "your-content-api-key"
 )
@@ -60,7 +60,7 @@ To fetch posts from your Ghost blog:
 
 ```swift
 do {
-    let postsResponse = try await phantomKit.getPosts(limit: 15, page: 1)
+    let postsResponse = try await ghostingKit.getPosts(limit: 15, page: 1)
     for post in postsResponse.posts {
         print(post.title)
     }
@@ -75,7 +75,7 @@ To fetch pages from your Ghost site:
 
 ```swift
 do {
-    let pagesResponse = try await phantomKit.getPages(limit: 10, page: 1)
+    let pagesResponse = try await ghostingKit.getPages(limit: 10, page: 1)
     for page in pagesResponse.pages {
         print(page.title)
     }
@@ -90,7 +90,7 @@ To fetch tags from your Ghost blog:
 
 ```swift
 do {
-    let tagsResponse = try await phantomKit.getTags(limit: 20, include: "count.posts")
+    let tagsResponse = try await ghostingKit.getTags(limit: 20, include: "count.posts")
     for tag in tagsResponse.tags {
         print("\(tag.name): \(tag.count?.posts ?? 0) posts")
     }
@@ -105,7 +105,7 @@ To fetch authors from your Ghost blog:
 
 ```swift
 do {
-    let authorsResponse = try await phantomKit.getAuthors(limit: 5, include: "count.posts")
+    let authorsResponse = try await ghostingKit.getAuthors(limit: 5, include: "count.posts")
     for author in authorsResponse.authors {
         print("\(author.name): \(author.count?.posts ?? 0) posts")
     }
@@ -120,7 +120,7 @@ To fetch a specific post by its ID:
 
 ```swift
 do {
-    let post = try await phantomKit.getPost(id: "post-id", include: "authors,tags")
+    let post = try await ghostingKit.getPost(id: "post-id", include: "authors,tags")
     print("Post title: \(post.title)")
     print("Author: \(post.authors?.first?.name ?? "Unknown")")
 } catch {
@@ -134,7 +134,7 @@ To fetch a specific page by its slug:
 
 ```swift
 do {
-    let page = try await phantomKit.getPageBySlug(slug: "about", include: "authors")
+    let page = try await ghostingKit.getPageBySlug(slug: "about", include: "authors")
     print("Page title: \(page.title)")
     print("Content: \(page.html)")
 } catch {
@@ -144,7 +144,7 @@ do {
 
 ## Contributing
 
-Contributions to PhantomKit are more than welcome! Please feel free to submit a Pull Request.
+Contributions to GhostingKit are more than welcome! Please feel free to submit a Pull Request.
 
 ## License
 
