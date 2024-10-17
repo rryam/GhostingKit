@@ -185,4 +185,81 @@ public actor PhantomKit {
     let response = try decoder.decode(GhostTagsResponse.self, from: data)
     return response.tags.first!
   }
+
+  /// Fetches pages from the Ghost Content API.
+  ///
+  /// Pages are static resources that are not included in channels or collections on the Ghost front-end.
+  /// This method retrieves only pages that were created as resources and will not contain routes created
+  /// with dynamic routing.
+  ///
+  /// - Parameters:
+  ///   - limit: The maximum number of pages to return (default is 15).
+  ///   - page: The page number to return (default is 1).
+  ///   - include: Related data to include in the response (e.g., "authors,tags").
+  ///
+  /// - Returns: A `GhostPagesResponse` containing an array of `GhostPage` objects.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getPages(
+    limit: Int = 15,
+    page: Int = 1,
+    include: String? = nil
+  ) async throws -> GhostPagesResponse {
+    var parameters: [String: String] = [
+      "limit": String(limit),
+      "page": String(page)
+    ]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("pages", parameters: parameters)
+    let decoder = JSONDecoder()
+    return try decoder.decode(GhostPagesResponse.self, from: data)
+  }
+
+  /// Fetches a specific page by its ID from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the page.
+  ///   - include: Related data to include in the response (e.g., "authors,tags").
+  ///
+  /// - Returns: A `GhostPage` object representing the requested page.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getPage(
+    id: String,
+    include: String? = nil
+  ) async throws -> GhostContent {
+    var parameters: [String: String] = [:]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("pages/\(id)", parameters: parameters)
+    let decoder = JSONDecoder()
+    let response = try decoder.decode(GhostPagesResponse.self, from: data)
+    return response.pages.first!
+  }
+
+  /// Fetches a specific page by its slug from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - slug: The slug of the page.
+  ///   - include: Related data to include in the response (e.g., "authors,tags").
+  ///
+  /// - Returns: A `GhostPage` object representing the requested page.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getPageBySlug(
+    slug: String,
+    include: String? = nil
+  ) async throws -> GhostContent {
+    var parameters: [String: String] = [:]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("pages/slug/\(slug)", parameters: parameters)
+    let decoder = JSONDecoder()
+    let response = try decoder.decode(GhostPagesResponse.self, from: data)
+    return response.pages.first!
+  }
 }

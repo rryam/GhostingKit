@@ -26,7 +26,7 @@ import Testing
     // Assert
     #expect(!postsResponse.posts.isEmpty, "The response should contain at least one post")
     #expect(postsResponse.posts.count == 15, "The response should contain 15 posts")
-    
+
     if let firstPost = postsResponse.posts.first {
       #expect(!firstPost.id.isEmpty, "Post ID should not be empty")
       #expect(!firstPost.title.isEmpty, "Post title should not be empty")
@@ -85,5 +85,61 @@ import Testing
     #expect(tag.canonicalUrl == nil, "Tag canonical URL should be nil")
     #expect(tag.accentColor == nil, "Tag accent color should be nil")
     #expect(tag.url == "https://demo.ghost.io/tag/getting-started/", "Tag URL should match expected value")
+  }
+  
+  /// Tests fetching a specific page by its slug from the Ghost Content API using PhantomKit.
+  ///
+  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// and attempts to fetch a specific page by its slug. It verifies that the API call succeeds
+  /// and returns the expected page data.
+  ///
+  /// - Note: This test uses the public demo Ghost site (https://demo.ghost.io) and its Content API key.
+  ///         The API key used here is for demonstration purposes only and may change in the future.
+  ///
+  /// - Important: This test requires an active internet connection to succeed.
+  @Test("Fetch specific page by slug from Ghost Content API")
+  func fetchPageBySlug() async throws {
+    // Arrange
+    let phantomKit = PhantomKit(
+      adminDomain: "demo.ghost.io",
+      apiKey: "22444f78447824223cefc48062"
+    )
+    let expectedSlug = "about"
+    
+    // Act
+    let page = try await phantomKit.getPageBySlug(slug: expectedSlug)
+    
+    // Assert
+    #expect(page.slug == expectedSlug, "Page slug should match the requested slug")
+    #expect(page.id == "62416b8cfb349a003cafc2f1", "Page ID should match expected value")
+    #expect(page.uuid == "0ebbf5c2-6014-40d9-a970-bcdca3b869ab", "Page UUID should match expected value")
+    #expect(page.title == "About this theme", "Page title should match expected value")
+    #expect(!page.html.isEmpty, "Page HTML content should not be empty")
+    #expect(page.commentId == "62416b8cfb349a003cafc2f1", "Page comment ID should match expected value")
+    #expect(page.featureImage == nil, "Page feature image should be nil")
+    #expect(page.featured == false, "Page featured status should be false")
+    #expect(page.visibility == "public", "Page visibility should be public")
+    #expect(page.createdAt == "2022-03-28T08:02:20.000+00:00", "Page created at should match expected value")
+    #expect(page.updatedAt == "2022-05-23T10:46:48.000+00:00", "Page updated at should match expected value")
+    #expect(page.publishedAt == "2022-03-29T14:12:53.000+00:00", "Page published at should match expected value")
+    #expect(page.customExcerpt == nil, "Page custom excerpt should be nil")
+    #expect(page.codeinjectionHead == nil, "Page code injection head should be nil")
+    #expect(page.codeinjectionFoot == nil, "Page code injection foot should be nil")
+    #expect(page.customTemplate == nil, "Page custom template should be nil")
+    #expect(page.canonicalUrl == nil, "Page canonical URL should be nil")
+    #expect(page.url == "https://demo.ghost.io/about/", "Page URL should match expected value")
+    #expect(!page.excerpt.isEmpty, "Page excerpt should not be empty")
+    #expect(page.readingTime == 1, "Page reading time should be 1 minute")
+    #expect(page.access == true, "Page access should be true")
+    #expect(page.ogImage == nil, "Page OG image should be nil")
+    #expect(page.ogTitle == nil, "Page OG title should be nil")
+    #expect(page.ogDescription == nil, "Page OG description should be nil")
+    #expect(page.twitterImage == nil, "Page Twitter image should be nil")
+    #expect(page.twitterTitle == nil, "Page Twitter title should be nil")
+    #expect(page.twitterDescription == nil, "Page Twitter description should be nil")
+    #expect(page.metaTitle == nil, "Page meta title should be nil")
+    #expect(page.metaDescription == nil, "Page meta description should be nil")
+    #expect(page.featureImageAlt == nil, "Page feature image alt should be nil")
+    #expect(page.featureImageCaption == nil, "Page feature image caption should be nil")
   }
 }
