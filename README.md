@@ -1,6 +1,20 @@
 # PhantomKit: Unofficial Swift SDK for Ghost API 👻
 
-PhantomKit is an unofficial Swift SDK for the Ghost Content API to interact with Ghost blogs, allowing you to fetch posts, pages (soon), tags (soon) and authors (soon) detail. I was learning about Phantom Types in Swift when learning about the Ghost Content API, and that is how I came with the name PhantomKit.
+PhantomKit is an unofficial Swift SDK for the Ghost Content API to interact with Ghost blogs, allowing you to fetch posts, pages, tags, and authors detail. I was learning about Phantom Types in Swift when learning about the Ghost Content API, and that is how I came with the name PhantomKit.
+
+- [Features](#features)
+- [Installation](#installation)
+  - [Swift Package Manager](#swift-package-manager)
+- [Usage](#usage)
+- [Examples](#examples)
+  - [Fetching Posts](#fetching-posts)
+  - [Fetching Pages](#fetching-pages)
+  - [Fetching Tags](#fetching-tags)
+  - [Fetching Authors](#fetching-authors)
+  - [Fetching a Specific Post](#fetching-a-specific-post)
+  - [Fetching a Specific Page](#fetching-a-specific-page)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
@@ -38,6 +52,8 @@ let phantomKit = PhantomKit(
 )
 ```
 
+## Examples
+
 ### Fetching Posts
 
 To fetch posts from your Ghost blog:
@@ -50,6 +66,79 @@ do {
     }
 } catch {
     print("Error fetching posts: \(error)")
+}
+```
+
+### Fetching Pages
+
+To fetch pages from your Ghost site:
+
+```swift
+do {
+    let pagesResponse = try await phantomKit.getPages(limit: 10, page: 1)
+    for page in pagesResponse.pages {
+        print(page.title)
+    }
+} catch {
+    print("Error fetching pages: \(error)")
+}
+```
+
+### Fetching Tags
+
+To fetch tags from your Ghost blog:
+
+```swift
+do {
+    let tagsResponse = try await phantomKit.getTags(limit: 20, include: "count.posts")
+    for tag in tagsResponse.tags {
+        print("\(tag.name): \(tag.count?.posts ?? 0) posts")
+    }
+} catch {
+    print("Error fetching tags: \(error)")
+}
+```
+
+### Fetching Authors
+
+To fetch authors from your Ghost blog:
+
+```swift
+do {
+    let authorsResponse = try await phantomKit.getAuthors(limit: 5, include: "count.posts")
+    for author in authorsResponse.authors {
+        print("\(author.name): \(author.count?.posts ?? 0) posts")
+    }
+} catch {
+    print("Error fetching authors: \(error)")
+}
+```
+
+### Fetching a Specific Post
+
+To fetch a specific post by its ID:
+
+```swift
+do {
+    let post = try await phantomKit.getPost(id: "post-id", include: "authors,tags")
+    print("Post title: \(post.title)")
+    print("Author: \(post.authors?.first?.name ?? "Unknown")")
+} catch {
+    print("Error fetching post: \(error)")
+}
+```
+
+### Fetching a Specific Page
+
+To fetch a specific page by its slug:
+
+```swift
+do {
+    let page = try await phantomKit.getPageBySlug(slug: "about", include: "authors")
+    print("Page title: \(page.title)")
+    print("Content: \(page.html)")
+} catch {
+    print("Error fetching page: \(error)")
 }
 ```
 
