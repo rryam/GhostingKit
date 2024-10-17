@@ -106,6 +106,89 @@ public actor PhantomKit {
   }
 
   /// Fetches tags from the Ghost Content API.
+  
+  /// Fetches authors from the Ghost Content API.
+  ///
+  /// This method retrieves authors who have published posts associated with them from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - limit: The maximum number of authors to return (default is 15).
+  ///   - page: The page of authors to return (default is 1).
+  ///   - include: Related data to include in the response (e.g., "count.posts").
+  ///
+  /// - Returns: A `GhostAuthorsResponse` containing an array of `GhostAuthor` objects.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  ///
+  /// - Note: Authors that are not associated with a post are not returned.
+  public func getAuthors(
+    limit: Int = 15,
+    page: Int = 1,
+    include: String? = nil
+  ) async throws -> GhostAuthorsResponse {
+    var parameters: [String: String] = [
+      "limit": String(limit),
+      "page": String(page)
+    ]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("authors", parameters: parameters)
+    let decoder = JSONDecoder()
+    return try decoder.decode(GhostAuthorsResponse.self, from: data)
+  }
+
+  /// Fetches a specific author by their ID from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the author.
+  ///   - include: Related data to include in the response (e.g., "count.posts").
+  ///
+  /// - Returns: A `GhostAuthor` object representing the requested author.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getAuthor(
+    id: String,
+    include: String? = nil
+  ) async throws -> GhostAuthor {
+    var parameters: [String: String] = [:]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("authors/\(id)", parameters: parameters)
+    let decoder = JSONDecoder()
+    let response = try decoder.decode(GhostAuthorsResponse.self, from: data)
+    guard let author = response.authors.first else {
+      throw NSError(domain: "PhantomKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Author not found"])
+    }
+    return author
+  }
+
+  /// Fetches a specific author by their slug from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - slug: The slug of the author.
+  ///   - include: Related data to include in the response (e.g., "count.posts").
+  ///
+  /// - Returns: A `GhostAuthor` object representing the requested author.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getAuthorBySlug(
+    slug: String,
+    include: String? = nil
+  ) async throws -> GhostAuthor {
+    var parameters: [String: String] = [:]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("authors/slug/\(slug)", parameters: parameters)
+    let decoder = JSONDecoder()
+    let response = try decoder.decode(GhostAuthorsResponse.self, from: data)
+    guard let author = response.authors.first else {
+      throw NSError(domain: "PhantomKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Author not found"])
+    }
+    return author
+  }
   ///
   /// This method retrieves tags from the Ghost Content API. By default, it includes
   /// internal tags. Use the `filter` parameter to limit the response to public tags.

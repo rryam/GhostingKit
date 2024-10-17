@@ -142,4 +142,42 @@ import Testing
     #expect(page.featureImageAlt == nil, "Page feature image alt should be nil")
     #expect(page.featureImageCaption == nil, "Page feature image caption should be nil")
   }
+  
+  /// Tests fetching a specific author by their ID from the Ghost Content API using PhantomKit.
+  ///
+  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// and attempts to fetch a specific author by their ID. It verifies that the API call succeeds
+  /// and returns the expected author data.
+  ///
+  /// - Note: This test uses the public demo Ghost site (https://demo.ghost.io) and its Content API key.
+  ///         The API key used here is for demonstration purposes only and may change in the future.
+  ///
+  /// - Important: This test requires an active internet connection to succeed.
+  @Test("Fetch specific author by ID from Ghost Content API")
+  func fetchAuthorById() async throws {
+    // Arrange
+    let phantomKit = PhantomKit(
+      adminDomain: "demo.ghost.io",
+      apiKey: "22444f78447824223cefc48062"
+    )
+    let expectedAuthorId = "5979a779df093500228e9590"
+    
+    // Act
+    let author = try await phantomKit.getAuthor(id: expectedAuthorId)
+    
+    // Assert
+    #expect(author.id == expectedAuthorId, "Author ID should match the requested ID")
+    #expect(author.name == "Abraham Lincoln", "Author name should match expected value")
+    #expect(author.slug == "abe", "Author slug should match expected value")
+    #expect(author.profileImage == "https://demo.ghost.io/content/images/2018/10/abe.jpg", "Author profile image should match expected value")
+    #expect(author.coverImage == nil, "Author cover image should be nil")
+    #expect(author.bio == "I was the 16th president of the USA until I was assassinated in April of 1963.  I led the US through its Civil War - its bloodiest and greatest moral, constitutional and political crisis.", "Author bio should match expected value")
+    #expect(author.website == nil, "Author website should be nil")
+    #expect(author.location == "Kentucky, USA", "Author location should match expected value")
+    #expect(author.facebook == nil, "Author Facebook should be nil")
+    #expect(author.twitter == nil, "Author Twitter should be nil")
+    #expect(author.metaTitle == nil, "Author meta title should be nil")
+    #expect(author.metaDescription == nil, "Author meta description should be nil")
+    #expect(author.url == "https://demo.ghost.io/author/abe/", "Author URL should match expected value")
+  }
 }
