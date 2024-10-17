@@ -42,4 +42,48 @@ import Testing
       #expect(lastPost.slug == "gettysburg-address", "Last post slug should match expected value")
     }
   }
+  
+  /// Tests fetching a specific tag by its ID from the Ghost Content API using PhantomKit.
+  ///
+  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// and attempts to fetch a specific tag by its ID. It verifies that the API call succeeds
+  /// and returns the expected tag data.
+  ///
+  /// - Note: This test uses the public demo Ghost site (https://demo.ghost.io) and its Content API key.
+  ///         The API key used here is for demonstration purposes only and may change in the future.
+  ///
+  /// - Important: This test requires an active internet connection to succeed.
+  @Test("Fetch specific tag by ID from Ghost Content API")
+  func fetchTagById() async throws {
+    // Arrange
+    let phantomKit = PhantomKit(
+      adminDomain: "demo.ghost.io",
+      apiKey: "22444f78447824223cefc48062"
+    )
+    let expectedTagId = "59799bbd6ebb2f00243a33db"
+    
+    // Act
+    let tag = try await phantomKit.getTag(id: expectedTagId)
+    
+    // Assert
+    #expect(tag.id == expectedTagId, "Tag ID should match the requested ID")
+    #expect(tag.name == "Getting Started", "Tag name should match expected value")
+    #expect(tag.slug == "getting-started", "Tag slug should match expected value")
+    #expect(tag.description == nil, "Tag description should be nil")
+    #expect(tag.featureImage == nil, "Tag feature image should be nil")
+    #expect(tag.visibility == "public", "Tag visibility should be public")
+    #expect(tag.metaTitle == nil, "Tag meta title should be nil")
+    #expect(tag.metaDescription == nil, "Tag meta description should be nil")
+    #expect(tag.ogImage == nil, "Tag OG image should be nil")
+    #expect(tag.ogTitle == nil, "Tag OG title should be nil")
+    #expect(tag.ogDescription == nil, "Tag OG description should be nil")
+    #expect(tag.twitterImage == nil, "Tag Twitter image should be nil")
+    #expect(tag.twitterTitle == nil, "Tag Twitter title should be nil")
+    #expect(tag.twitterDescription == nil, "Tag Twitter description should be nil")
+    #expect(tag.codeinjectionHead == nil, "Tag code injection head should be nil")
+    #expect(tag.codeinjectionFoot == nil, "Tag code injection foot should be nil")
+    #expect(tag.canonicalUrl == nil, "Tag canonical URL should be nil")
+    #expect(tag.accentColor == nil, "Tag accent color should be nil")
+    #expect(tag.url == "https://demo.ghost.io/tag/getting-started/", "Tag URL should match expected value")
+  }
 }

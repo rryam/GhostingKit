@@ -104,4 +104,85 @@ public actor PhantomKit {
   //  decoder.dateDecodingStrategy = .iso8601
     return try decoder.decode(GhostPostsResponse.self, from: data)
   }
+
+  /// Fetches tags from the Ghost Content API.
+  ///
+  /// This method retrieves tags from the Ghost Content API. By default, it includes
+  /// internal tags. Use the `filter` parameter to limit the response to public tags.
+  ///
+  /// - Parameters:
+  ///   - limit: The maximum number of tags to return (default is 15).
+  ///   - page: The page of tags to return (default is 1).
+  ///   - include: Related data to include in the response (e.g., "count.posts").
+  ///   - filter: A filter to apply to the query (e.g., "visibility:public").
+  ///
+  /// - Returns: A `GhostTagsResponse` containing an array of `GhostTag` objects.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getTags(
+    limit: Int = 15,
+    page: Int = 1,
+    include: String? = nil,
+    filter: String? = nil
+  ) async throws -> GhostTagsResponse {
+    var parameters: [String: String] = [
+      "limit": String(limit),
+      "page": String(page)
+    ]
+    if let include = include {
+      parameters["include"] = include
+    }
+    if let filter = filter {
+      parameters["filter"] = filter
+    }
+    let data = try await get("tags", parameters: parameters)
+    let decoder = JSONDecoder()
+    return try decoder.decode(GhostTagsResponse.self, from: data)
+  }
+
+  /// Fetches a specific tag by its ID from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the tag.
+  ///   - include: Related data to include in the response (e.g., "count.posts").
+  ///
+  /// - Returns: A `GhostTag` object representing the requested tag.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getTag(
+    id: String,
+    include: String? = nil
+  ) async throws -> GhostTag {
+    var parameters: [String: String] = [:]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("tags/\(id)", parameters: parameters)
+    let decoder = JSONDecoder()
+    let response = try decoder.decode(GhostTagsResponse.self, from: data)
+    return response.tags.first!
+  }
+
+  /// Fetches a specific tag by its slug from the Ghost Content API.
+  ///
+  /// - Parameters:
+  ///   - slug: The slug of the tag.
+  ///   - include: Related data to include in the response (e.g., "count.posts").
+  ///
+  /// - Returns: A `GhostTag` object representing the requested tag.
+  ///
+  /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  public func getTagBySlug(
+    slug: String,
+    include: String? = nil
+  ) async throws -> GhostTag {
+    var parameters: [String: String] = [:]
+    if let include = include {
+      parameters["include"] = include
+    }
+    let data = try await get("tags/slug/\(slug)", parameters: parameters)
+    let decoder = JSONDecoder()
+    let response = try decoder.decode(GhostTagsResponse.self, from: data)
+    return response.tags.first!
+  }
 }
