@@ -1,8 +1,8 @@
 import SwiftUI
-import PhantomKit
+import GhostingKit
 
 struct AuthorsView: View {
-  var phantomKit: PhantomKit
+  var ghostingKit: GhostingKit
   @State private var authors: [GhostAuthor] = []
   @State private var isLoading = false
   @State private var error: Error?
@@ -41,7 +41,7 @@ struct AuthorsView: View {
     defer { isLoading = false }
 
     do {
-      authors = try await phantomKit.getAuthors().authors
+      authors = try await ghostingKit.getAuthors().authors
     } catch {
       self.error = error
     }

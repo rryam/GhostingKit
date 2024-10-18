@@ -1,8 +1,8 @@
 import SwiftUI
-import PhantomKit
+import GhostingKit
 
 struct PostsView: View {
-  var phantomKit: PhantomKit
+  var ghostingKit: GhostingKit
   @State private var posts: [GhostContent] = []
   @State private var isLoading = false
   @State private var error: Error?
@@ -41,7 +41,7 @@ struct PostsView: View {
     defer { isLoading = false }
 
     do {
-      posts = try await phantomKit.getPosts().posts
+      posts = try await ghostingKit.getPosts().posts
     } catch {
       self.error = error
     }

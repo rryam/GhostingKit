@@ -1,28 +1,28 @@
 import SwiftUI
-import PhantomKit
+import GhostingKit
 
 struct ContentView: View {
   @ObserveInjection var inject
-  let phantomKit = PhantomKit(
+  let ghostingKit = GhostingKit(
     adminDomain: "demo.ghost.io",
     apiKey: "22444f78447824223cefc48062"
   )
   
   var body: some View {
     TabView {
-      PostsView(phantomKit: phantomKit)
+      PostsView(ghostingKit: ghostingKit)
         .tabItem {
           Label("Posts", systemImage: "doc.text")
         }
-      TagsView(phantomKit: phantomKit)
+      TagsView(ghostingKit: ghostingKit)
         .tabItem {
           Label("Tags", systemImage: "tag")
         }
-      PagesView(phantomKit: phantomKit)
+      PagesView(ghostingKit: ghostingKit)
         .tabItem {
           Label("Pages", systemImage: "book")
         }
-      AuthorsView(phantomKit: phantomKit)
+      AuthorsView(ghostingKit: ghostingKit)
         .tabItem {
           Label("Authors", systemImage: "person.2")
         }

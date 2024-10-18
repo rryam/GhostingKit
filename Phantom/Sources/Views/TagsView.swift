@@ -1,8 +1,8 @@
 import SwiftUI
-import PhantomKit
+import GhostingKit
 
 struct TagsView: View {
-  var phantomKit: PhantomKit
+  var ghostingKit: GhostingKit
   @State private var tags: [GhostTag] = []
   @State private var isLoading = false
   @State private var error: Error?
@@ -40,7 +40,7 @@ struct TagsView: View {
     defer { isLoading = false }
 
     do {
-      tags = try await phantomKit.getTags().tags
+      tags = try await ghostingKit.getTags().tags
     } catch {
       self.error = error
     }
