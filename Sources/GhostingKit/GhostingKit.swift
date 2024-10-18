@@ -76,21 +76,28 @@ public actor GhostingKit {
 
     return data
   }
-
   /// Fetches posts from the Ghost Content API.
+  ///
+  /// This method retrieves posts from the Ghost Content API, allowing you to customize the query
+  /// with various parameters.
   ///
   /// - Parameters:
   ///   - limit: The maximum number of posts to return (default is 15).
   ///   - page: The page of posts to return (default is 1).
   ///   - include: Related data to include in the response (e.g., "authors,tags").
+  ///   - filter: A filter query to apply to the posts (e.g., "tag:getting-started").
   ///
   /// - Returns: A `GhostPostsResponse` containing an array of `GhostPost` objects.
   ///
   /// - Throws: An error if the network request fails, returns an invalid response, or fails to decode the JSON.
+  ///
+  /// - Note: The `filter` parameter allows you to narrow down the posts based on specific criteria.
+  ///         For example, you can use "tag:getting-started" to fetch only posts with the "getting-started" tag.
   public func getPosts(
     limit: Int = 15,
     page: Int = 1,
-    include: String? = nil
+    include: String? = nil,
+    filter: String? = nil
   ) async throws -> GhostPostsResponse {
     var parameters: [String: String] = [
       "limit": String(limit),
@@ -98,6 +105,9 @@ public actor GhostingKit {
     ]
     if let include = include {
       parameters["include"] = include
+    }
+    if let filter = filter {
+      parameters["filter"] = filter
     }
     let data = try await get("posts", parameters: parameters)
     let decoder = JSONDecoder()
