@@ -1,0 +1,24 @@
+{
+  "originHash" : "ebddb8e0687af2d69196f5b2f6ded1bee703bc8300a491f0f01c24bb1db05dc5",
+  "pins" : [
+    {
+      "identity" : "inject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/Inject.git",
+      "state" : {
+        "revision" : "728c56639ecb3df441d51d5bc6747329afabcfc9",
+        "version" : "1.5.2"
+      }
+    },
+    {
+      "identity" : "phantomkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rryam/PhantomKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "eb748fa79f4d5465174236a2c89f2362d3961970"
+      }
+    }
+  ],
+  "version" : 3
+}
