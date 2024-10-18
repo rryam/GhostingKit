@@ -1,0 +1,24 @@
+{
+  "originHash" : "179d712ac52afa47951b5ff6b40affaf5cccf81c4494de064f488795d4267f76",
+  "pins" : [
+    {
+      "identity" : "ghostingkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rryam/GhostingKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9c619a620bd509f7503969b9b9b74473bb9e88ec"
+      }
+    },
+    {
+      "identity" : "inject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/Inject.git",
+      "state" : {
+        "revision" : "728c56639ecb3df441d51d5bc6747329afabcfc9",
+        "version" : "1.5.2"
+      }
+    }
+  ],
+  "version" : 3
+}

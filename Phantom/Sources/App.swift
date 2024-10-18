@@ -2,7 +2,7 @@
 import SwiftUI
 
 @main
-struct PhantomApp: App {
+struct GhostingApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()

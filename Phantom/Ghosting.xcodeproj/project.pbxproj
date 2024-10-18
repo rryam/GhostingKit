@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A0C96C02CC262BC003DE4E6 /* PhantomKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A0C96BF2CC262BC003DE4E6 /* PhantomKit */; };
+		0AAEA9E52CC26C5300A1BE30 /* GhostingKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AAEA9E42CC26C5300A1BE30 /* GhostingKit */; };
 		37261ED01DB9F1F8514186F7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23C7352C37C0C7197D1DA38 /* App.swift */; };
 		64F5D3C7C78928A701ACFCDB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE032CC5606C9B91DC5B56 /* ContentView.swift */; };
 		87D6EC2B325B087309829F30 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 29FD0094A04F82794093CBDB /* Inject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		109FD842715CF7259792316C /* Phantom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phantom.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		109FD842715CF7259792316C /* Ghosting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghosting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAE032CC5606C9B91DC5B56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		843CB4383545B3C551902092 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A23C7352C37C0C7197D1DA38 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -29,8 +29,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AAEA9E52CC26C5300A1BE30 /* GhostingKit in Frameworks */,
 				87D6EC2B325B087309829F30 /* Inject in Frameworks */,
-				0A0C96C02CC262BC003DE4E6 /* PhantomKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +40,7 @@
 		23273BCC88E3B0A84EAC9013 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				109FD842715CF7259792316C /* Phantom.app */,
+				109FD842715CF7259792316C /* Ghosting.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,9 +67,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		12F09A3FE37083A511C002DF /* Phantom */ = {
+		12F09A3FE37083A511C002DF /* Ghosting */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0EBA31F544E388FCAD083D9A /* Build configuration list for PBXNativeTarget "Phantom" */;
+			buildConfigurationList = 0EBA31F544E388FCAD083D9A /* Build configuration list for PBXNativeTarget "Ghosting" */;
 			buildPhases = (
 				F15F12FB23BFC873C716A34E /* Sources */,
 				820EFA157B242084CCC88ACA /* Frameworks */,
@@ -81,13 +81,13 @@
 			fileSystemSynchronizedGroups = (
 				0A0C96C52CC2662A003DE4E6 /* Views */,
 			);
-			name = Phantom;
+			name = Ghosting;
 			packageProductDependencies = (
 				29FD0094A04F82794093CBDB /* Inject */,
-				0A0C96BF2CC262BC003DE4E6 /* PhantomKit */,
+				0AAEA9E42CC26C5300A1BE30 /* GhostingKit */,
 			);
 			productName = Phantom;
-			productReference = 109FD842715CF7259792316C /* Phantom.app */;
+			productReference = 109FD842715CF7259792316C /* Ghosting.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +99,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 			};
-			buildConfigurationList = 78F2C0983FE329351D155E2B /* Build configuration list for PBXProject "Phantom" */;
+			buildConfigurationList = 78F2C0983FE329351D155E2B /* Build configuration list for PBXProject "Ghosting" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -110,12 +110,12 @@
 			mainGroup = C99E5E2C2854ADF934DA3B52;
 			packageReferences = (
 				288D10D9B8E5426E11B9BF44 /* XCRemoteSwiftPackageReference "Inject" */,
-				0A0C96BE2CC262BC003DE4E6 /* XCRemoteSwiftPackageReference "PhantomKit" */,
+				0AAEA9E32CC26C5300A1BE30 /* XCRemoteSwiftPackageReference "GhostingKit" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				12F09A3FE37083A511C002DF /* Phantom */,
+				12F09A3FE37083A511C002DF /* Ghosting */,
 			);
 		};
 /* End PBXProject section */
@@ -149,6 +149,7 @@
 					"-interposable",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.Phantom;
+				PRODUCT_NAME = Ghosting;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -233,6 +234,7 @@
 					"-interposable",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.Phantom;
+				PRODUCT_NAME = Ghosting;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -297,7 +299,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0EBA31F544E388FCAD083D9A /* Build configuration list for PBXNativeTarget "Phantom" */ = {
+		0EBA31F544E388FCAD083D9A /* Build configuration list for PBXNativeTarget "Ghosting" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E2311EC918E08E995401D23 /* Debug */,
@@ -306,7 +308,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		78F2C0983FE329351D155E2B /* Build configuration list for PBXProject "Phantom" */ = {
+		78F2C0983FE329351D155E2B /* Build configuration list for PBXProject "Ghosting" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8F37D30F286FDFDF84CFB8ED /* Debug */,
@@ -318,9 +320,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0A0C96BE2CC262BC003DE4E6 /* XCRemoteSwiftPackageReference "PhantomKit" */ = {
+		0AAEA9E32CC26C5300A1BE30 /* XCRemoteSwiftPackageReference "GhostingKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rryam/PhantomKit";
+			repositoryURL = "https://github.com/rryam/GhostingKit";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -337,10 +339,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0A0C96BF2CC262BC003DE4E6 /* PhantomKit */ = {
+		0AAEA9E42CC26C5300A1BE30 /* GhostingKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0A0C96BE2CC262BC003DE4E6 /* XCRemoteSwiftPackageReference "PhantomKit" */;
-			productName = PhantomKit;
+			package = 0AAEA9E32CC26C5300A1BE30 /* XCRemoteSwiftPackageReference "GhostingKit" */;
+			productName = GhostingKit;
 		};
 		29FD0094A04F82794093CBDB /* Inject */ = {
 			isa = XCSwiftPackageProductDependency;
