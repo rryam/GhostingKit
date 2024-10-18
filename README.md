@@ -1,6 +1,6 @@
 # GhostingKit: Unofficial Swift SDK for Ghost API 👻
 
-GhostingKit is an unofficial Swift SDK for the Ghost Content API to interact with Ghost blogs, allowing you to fetch posts, pages, tags, and authors detail. I was learning about Phantom Types in Swift when learning about the Ghost Content API, and that is how I came with the name PhantomKit. Then, a week later, I had a thought about how recruiters ghosted me during my internship hunt so I renamed this library to GhostingKit. 
+GhostingKit is an unofficial Swift SDK for the Ghost Content API to interact with Ghost blogs, allowing you to fetch posts, pages, tags, and authors detail. I was learning about Phantom Types in Swift when learning about the Ghost Content API, and that is how I came with the name PhantomKit. Then, a week later, I had a thought about how recruiters ghosted me during my internship hunt so I renamed this library to GhostingKit.
 
 - [Features](#features)
 - [Installation](#installation)
@@ -148,6 +148,6 @@ Contributions to GhostingKit are more than welcome! Please feel free to submit a
 
 ## License
 
-PhantomKit is available under the MIT license. See the LICENSE file for more info.
+GhostingKit is available under the MIT license. See the LICENSE file for more info.
 
 Note: Not affiliated with Ghost.

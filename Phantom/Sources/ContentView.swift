@@ -7,12 +7,7 @@ struct ContentView: View {
     adminDomain: "demo.ghost.io",
     apiKey: "22444f78447824223cefc48062"
   )
-
-  init() {
-    // Initialize ContentView
-    // This initializer is called when a new ContentView instance is created
-  }
-
+  
   var body: some View {
     TabView {
       PostsView(phantomKit: phantomKit)

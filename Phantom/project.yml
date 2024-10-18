@@ -1,0 +1,25 @@
+name: Phantom
+options:
+  bundleIdPrefix: com.rudrankriyam
+  deploymentTarget:
+    iOS: 17.0
+  generateEmptyDirectories: true
+packages:
+  Inject:
+    url: "https://github.com/krzysztofzablocki/Inject.git"
+    from: "1.2.4"
+targets:
+  Phantom:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    dependencies:
+      - package: Inject
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rudrankriyam.Phantom
+        DEVELOPMENT_TEAM: "Apple Development: Rudrank Riyam (NAA93596BZ)"
+        OTHER_LDFLAGS:
+          -Xlinker
+          -interposable

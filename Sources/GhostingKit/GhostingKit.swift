@@ -5,14 +5,14 @@ import Foundation
 
 /// An actor representing the Ghost Content API client.
 ///
-/// The `PhantomKit` actor provides methods to interact with Ghost's RESTful Content API,
+/// The `GhostingKit` actor provides methods to interact with Ghost's RESTful Content API,
 /// allowing read-only access to published content. It simplifies the process of fetching
 /// posts, pages, tags, authors, tiers, and settings from a Ghost site.
 ///
 /// - Important: This actor requires a valid API key and admin domain to function correctly.
 ///
 /// - Note: The Content API is designed to be fully cacheable, allowing frequent data fetching without limitations.
-public actor PhantomKit {
+public actor GhostingKit {
   /// The base URL for the Ghost Content API.
   private let baseURL: URL
 
@@ -25,7 +25,7 @@ public actor PhantomKit {
   /// The URL session used for network requests.
   private let urlSession: URLSession
 
-  /// Initializes a new instance of the PhantomKit actor.
+  /// Initializes a new instance of the GhostingKit actor.
   ///
   /// - Parameters:
   ///   - adminDomain: The admin domain of the Ghost site (e.g., "example.ghost.io").
@@ -71,7 +71,7 @@ public actor PhantomKit {
 
     guard let httpResponse = response as? HTTPURLResponse,
           (200...299).contains(httpResponse.statusCode) else {
-      throw NSError(domain: "PhantomKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
+      throw NSError(domain: "GhostingKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
     }
 
     return data
@@ -159,7 +159,7 @@ public actor PhantomKit {
     let decoder = JSONDecoder()
     let response = try decoder.decode(GhostAuthorsResponse.self, from: data)
     guard let author = response.authors.first else {
-      throw NSError(domain: "PhantomKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Author not found"])
+      throw NSError(domain: "GhostingKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Author not found"])
     }
     return author
   }
@@ -185,7 +185,7 @@ public actor PhantomKit {
     let decoder = JSONDecoder()
     let response = try decoder.decode(GhostAuthorsResponse.self, from: data)
     guard let author = response.authors.first else {
-      throw NSError(domain: "PhantomKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Author not found"])
+      throw NSError(domain: "GhostingKit", code: 0, userInfo: [NSLocalizedDescriptionKey: "Author not found"])
     }
     return author
   }

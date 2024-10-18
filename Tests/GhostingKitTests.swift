@@ -1,11 +1,11 @@
 import Testing
-@testable import PhantomKit
+@testable import GhostingKit
 
-@Suite struct PhantomKitTests {
+@Suite struct GhostingKitTests {
   
-  /// Tests fetching posts from the Ghost Content API using PhantomKit.
+  /// Tests fetching posts from the Ghost Content API using GhostingKit.
   ///
-  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// This test case initializes a GhostingKit instance with the demo Ghost site's credentials
   /// and attempts to fetch posts. It verifies that the API call succeeds and returns valid data.
   ///
   /// - Note: This test uses the public demo Ghost site (https://demo.ghost.io) and its Content API key.
@@ -15,13 +15,13 @@ import Testing
   @Test("Fetch posts from Ghost Content API")
   func fetchPosts() async throws {
     // Arrange
-    let phantomKit = PhantomKit(
+    let ghostingKit = GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
     
     // Act
-    let postsResponse = try await phantomKit.getPosts(limit: 15)
+    let postsResponse = try await ghostingKit.getPosts(limit: 15)
     
     // Assert
     #expect(!postsResponse.posts.isEmpty, "The response should contain at least one post")
@@ -43,9 +43,9 @@ import Testing
     }
   }
   
-  /// Tests fetching a specific tag by its ID from the Ghost Content API using PhantomKit.
+  /// Tests fetching a specific tag by its ID from the Ghost Content API using GhostingKit.
   ///
-  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// This test case initializes a GhostingKit instance with the demo Ghost site's credentials
   /// and attempts to fetch a specific tag by its ID. It verifies that the API call succeeds
   /// and returns the expected tag data.
   ///
@@ -56,14 +56,14 @@ import Testing
   @Test("Fetch specific tag by ID from Ghost Content API")
   func fetchTagById() async throws {
     // Arrange
-    let phantomKit = PhantomKit(
+    let ghostingKit = GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
     let expectedTagId = "59799bbd6ebb2f00243a33db"
     
     // Act
-    let tag = try await phantomKit.getTag(id: expectedTagId)
+    let tag = try await ghostingKit.getTag(id: expectedTagId)
     
     // Assert
     #expect(tag.id == expectedTagId, "Tag ID should match the requested ID")
@@ -87,9 +87,9 @@ import Testing
     #expect(tag.url == "https://demo.ghost.io/tag/getting-started/", "Tag URL should match expected value")
   }
   
-  /// Tests fetching a specific page by its slug from the Ghost Content API using PhantomKit.
+  /// Tests fetching a specific page by its slug from the Ghost Content API using GhostingKit.
   ///
-  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// This test case initializes a GhostingKit instance with the demo Ghost site's credentials
   /// and attempts to fetch a specific page by its slug. It verifies that the API call succeeds
   /// and returns the expected page data.
   ///
@@ -100,14 +100,14 @@ import Testing
   @Test("Fetch specific page by slug from Ghost Content API")
   func fetchPageBySlug() async throws {
     // Arrange
-    let phantomKit = PhantomKit(
+    let ghostingKit = GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
     let expectedSlug = "about"
     
     // Act
-    let page = try await phantomKit.getPageBySlug(slug: expectedSlug)
+    let page = try await ghostingKit.getPageBySlug(slug: expectedSlug)
     
     // Assert
     #expect(page.slug == expectedSlug, "Page slug should match the requested slug")
@@ -143,9 +143,9 @@ import Testing
     #expect(page.featureImageCaption == nil, "Page feature image caption should be nil")
   }
   
-  /// Tests fetching a specific author by their ID from the Ghost Content API using PhantomKit.
+  /// Tests fetching a specific author by their ID from the Ghost Content API using GhostingKit.
   ///
-  /// This test case initializes a PhantomKit instance with the demo Ghost site's credentials
+  /// This test case initializes a GhostingKit instance with the demo Ghost site's credentials
   /// and attempts to fetch a specific author by their ID. It verifies that the API call succeeds
   /// and returns the expected author data.
   ///
@@ -156,14 +156,14 @@ import Testing
   @Test("Fetch specific author by ID from Ghost Content API")
   func fetchAuthorById() async throws {
     // Arrange
-    let phantomKit = PhantomKit(
+    let ghostingKit = GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
     let expectedAuthorId = "5979a779df093500228e9590"
     
     // Act
-    let author = try await phantomKit.getAuthor(id: expectedAuthorId)
+    let author = try await ghostingKit.getAuthor(id: expectedAuthorId)
     
     // Assert
     #expect(author.id == expectedAuthorId, "Author ID should match the requested ID")

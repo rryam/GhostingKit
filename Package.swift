@@ -3,8 +3,12 @@
 
 import PackageDescription
 
+/// Package definition for GhostingKit, a Swift library for interacting with the Ghost Content API.
+///
+/// This package provides a convenient way to integrate Ghost content into Swift applications,
+/// supporting various Apple platforms including iOS, macOS, tvOS, watchOS, and visionOS.
 let package = Package(
-  name: "PhantomKit",
+  name: "GhostingKit",
   platforms: [
     .iOS(.v16),
     .macOS(.v13),
@@ -13,17 +17,27 @@ let package = Package(
     .visionOS(.v1)
   ],
   products: [
+    /// The main GhostingKit library product.
+    ///
+    /// This static library can be integrated into Swift projects to access Ghost Content API functionality.
     .library(
-      name: "PhantomKit",
+      name: "GhostingKit",
       type: .static,
-      targets: ["PhantomKit"]
+      targets: ["GhostingKit"]
     )
   ],
   targets: [
-    .target(name: "PhantomKit"),
+    /// The main target for the GhostingKit library.
+    ///
+    /// This target contains the core functionality for interacting with the Ghost Content API.
+    .target(name: "GhostingKit"),
+    
+    /// The test target for GhostingKit.
+    ///
+    /// This target contains unit tests to ensure the proper functioning of the GhostingKit library.
     .testTarget(
-      name: "PhantomKitTests",
-      dependencies: ["PhantomKit"]
+      name: "GhostingKitTests",
+      dependencies: ["GhostingKit"]
     )
   ]
 )
