@@ -1,4 +1,3 @@
-@_exported import Inject
 import SwiftUI
 
 @main

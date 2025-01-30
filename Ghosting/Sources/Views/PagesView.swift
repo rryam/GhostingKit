@@ -13,7 +13,7 @@ struct PagesView: View {
         VStack(alignment: .leading, spacing: 8) {
           Text(page.title)
             .font(.headline)
-          Text(page.excerpt ?? "")
+            Text(page.excerpt)
             .font(.subheadline)
             .foregroundColor(.secondary)
         }

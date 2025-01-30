@@ -13,7 +13,7 @@ struct PostsView: View {
         VStack(alignment: .leading, spacing: 8) {
           Text(post.title)
             .font(.headline)
-          Text(post.excerpt ?? "")
+            Text(post.excerpt)
             .font(.subheadline)
             .foregroundColor(.secondary)
         }

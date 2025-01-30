@@ -2,8 +2,7 @@ import SwiftUI
 import GhostingKit
 
 struct ContentView: View {
-  @ObserveInjection var inject
-  let ghostingKit = GhostingKit(
+  private let ghostingKit = GhostingKit(
     adminDomain: "demo.ghost.io",
     apiKey: "22444f78447824223cefc48062"
   )
@@ -27,7 +26,6 @@ struct ContentView: View {
           Label("Authors", systemImage: "person.2")
         }
     }
-    .enableInjection()
   }
 }
 

@@ -13,7 +13,7 @@ struct TagsView: View {
         HStack {
           Text(tag.name)
           Spacer()
-          Text("\(tag.count)")
+            Text("\(String(describing: tag.count))")
             .foregroundColor(.secondary)
         }
       }
