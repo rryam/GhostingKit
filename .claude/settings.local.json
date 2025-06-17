@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "Bash(git branch:*)"
       "Bash(rm:*)",
       "Bash(find:*)",
       "Bash(touch:*)",
