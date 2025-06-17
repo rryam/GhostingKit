@@ -3,7 +3,7 @@ import Foundation
 /// Represents an author in the Ghost Content API.
 ///
 /// Authors are a subset of users who have published posts associated with them.
-public struct GhostAuthor: Codable, Sendable {
+public struct GhostAuthor: Codable, Sendable, Identifiable, Hashable, Equatable {
   /// The unique identifier of the author.
   public let id: String
   
@@ -47,7 +47,7 @@ public struct GhostAuthor: Codable, Sendable {
   public let count: PostCount?
   
   /// Represents the count of posts for an author.
-  public struct PostCount: Codable, Sendable {
+  public struct PostCount: Codable, Sendable, Hashable, Equatable {
     /// The number of posts associated with the author.
     public let posts: Int
   }
@@ -66,4 +66,7 @@ public struct GhostAuthor: Codable, Sendable {
 public struct GhostAuthorsResponse: Codable, Sendable {
   /// An array of authors returned by the API.
   public let authors: [GhostAuthor]
+  
+  /// Metadata containing pagination information.
+  public let meta: GhostResponseMeta?
 }

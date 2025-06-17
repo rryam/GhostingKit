@@ -8,7 +8,7 @@
 import Foundation
 
 /// A struct representing a tag in the Ghost Content API.
-public struct GhostTag: Codable, Sendable {
+public struct GhostTag: Codable, Sendable, Identifiable, Hashable, Equatable {
   /// The unique identifier of the tag.
   public let id: String
 
@@ -88,7 +88,7 @@ public struct GhostTag: Codable, Sendable {
 }
 
 /// A struct representing the count of posts for a tag.
-public struct TagCount: Codable, Sendable {
+public struct TagCount: Codable, Sendable, Hashable, Equatable {
   /// The number of posts associated with the tag.
   public let posts: Int
 }
@@ -97,4 +97,7 @@ public struct TagCount: Codable, Sendable {
 public struct GhostTagsResponse: Codable, Sendable {
   /// An array of tags returned by the API.
   public let tags: [GhostTag]
+  
+  /// Metadata containing pagination information.
+  public let meta: GhostResponseMeta?
 }

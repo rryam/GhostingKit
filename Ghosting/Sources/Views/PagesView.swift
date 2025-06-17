@@ -10,12 +10,58 @@ struct PagesView: View {
   var body: some View {
     NavigationView {
       List(pages, id: \.id) { page in
-        VStack(alignment: .leading, spacing: 8) {
-          Text(page.title)
-            .font(.headline)
-            Text(page.excerpt)
-            .font(.subheadline)
-            .foregroundColor(.secondary)
+        NavigationLink(destination: PageDetailView(page: page)) {
+          HStack(alignment: .top, spacing: 12) {
+            if let featureImage = page.featureImage {
+              AsyncImage(url: URL(string: featureImage)) { image in
+                image
+                  .resizable()
+                  .aspectRatio(contentMode: .fill)
+              } placeholder: {
+                Rectangle()
+                  .fill(Color.gray.opacity(0.2))
+              }
+              .frame(width: 60, height: 60)
+              .clipped()
+              .cornerRadius(8)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+              Text(page.title)
+                .font(.headline)
+                .lineLimit(2)
+              
+              if let excerpt = page.excerpt {
+                Text(excerpt)
+                  .font(.subheadline)
+                  .foregroundColor(.secondary)
+                  .lineLimit(3)
+              }
+              
+              HStack {
+                if let publishedAt = page.publishedAt {
+                  Text(publishedAt.formatted(date: .abbreviated, time: .omitted))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                }
+                
+                if page.featured {
+                  Image(systemName: "star.fill")
+                    .foregroundColor(.yellow)
+                    .font(.caption)
+                }
+                
+                if page.visibility != "public" {
+                  Image(systemName: "eye.slash")
+                    .foregroundColor(.orange)
+                    .font(.caption)
+                }
+              }
+            }
+            
+            Spacer()
+          }
+          .padding(.vertical, 4)
         }
       }
       .navigationTitle("Pages")

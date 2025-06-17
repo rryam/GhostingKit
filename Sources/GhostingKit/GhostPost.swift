@@ -7,8 +7,14 @@
 
 import Foundation
 
+/// Type alias for GhostPost to maintain backward compatibility
+public typealias GhostPost = GhostContent
+
+/// Type alias for GhostPage to maintain backward compatibility
+public typealias GhostPage = GhostContent
+
 /// A generic structure representing a Ghost content item (post or page).
-public struct GhostContent: Codable, Sendable {
+public struct GhostContent: Codable, Sendable, Identifiable, Hashable, Equatable {
   /// The URL slug of the content item.
   public let slug: String
   
@@ -22,10 +28,10 @@ public struct GhostContent: Codable, Sendable {
   public let title: String
   
   /// The HTML content of the content item.
-  public let html: String
+  public let html: String?
   
   /// The comment ID associated with the content item.
-  public let commentId: String
+  public let commentId: String?
   
   /// The URL of the feature image for the content item.
   public let featureImage: String?
@@ -43,13 +49,13 @@ public struct GhostContent: Codable, Sendable {
   public let visibility: String
   
   /// The creation date of the content item.
-  public let createdAt: String
+  public let createdAt: Date
   
   /// The last update date of the content item.
-  public let updatedAt: String
+  public let updatedAt: Date
   
   /// The publication date of the content item.
-  public let publishedAt: String
+  public let publishedAt: Date?
   
   /// A custom excerpt for the content item.
   public let customExcerpt: String?
@@ -70,10 +76,10 @@ public struct GhostContent: Codable, Sendable {
   public let url: String
   
   /// An excerpt of the content item's content.
-  public let excerpt: String
+  public let excerpt: String?
   
   /// The estimated reading time of the content item in minutes.
-  public let readingTime: Int
+  public let readingTime: Int?
   
   /// Indicates whether the content item is accessible.
   public let access: Bool
@@ -133,7 +139,14 @@ public struct GhostContent: Codable, Sendable {
     case metaTitle = "meta_title"
     case metaDescription = "meta_description"
     case emailSubject = "email_subject"
+    case tags, authors
   }
+  
+  /// Tags associated with the content item.
+  public let tags: [GhostTag]?
+  
+  /// Authors of the content item.
+  public let authors: [GhostAuthor]?
 }
 
 /// A structure representing the response from the Ghost Content API for posts.
