@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(touch:*)",
+      "Bash(swift build)",
+      "Bash(swift test)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}

@@ -10,12 +10,47 @@ struct AuthorsView: View {
   var body: some View {
     NavigationView {
       List(authors, id: \.id) { author in
-        VStack(alignment: .leading, spacing: 8) {
-          Text(author.name)
-            .font(.headline)
-          Text(author.bio ?? "")
-            .font(.subheadline)
-            .foregroundColor(.secondary)
+        NavigationLink(destination: AuthorDetailView(author: author, ghostingKit: ghostingKit)) {
+          HStack {
+            if let profileImage = author.profileImage {
+              AsyncImage(url: URL(string: profileImage)) { image in
+                image
+                  .resizable()
+                  .aspectRatio(contentMode: .fill)
+              } placeholder: {
+                Circle()
+                  .fill(Color.gray.opacity(0.2))
+                  .overlay(
+                    Image(systemName: "person.fill")
+                      .foregroundColor(.gray)
+                  )
+              }
+              .frame(width: 50, height: 50)
+              .clipShape(Circle())
+            } else {
+              Circle()
+                .fill(Color.gray.opacity(0.2))
+                .frame(width: 50, height: 50)
+                .overlay(
+                  Image(systemName: "person.fill")
+                    .foregroundColor(.gray)
+                )
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+              Text(author.name)
+                .font(.headline)
+              if let bio = author.bio {
+                Text(bio)
+                  .font(.subheadline)
+                  .foregroundColor(.secondary)
+                  .lineLimit(2)
+              }
+            }
+            
+            Spacer()
+          }
+          .padding(.vertical, 4)
         }
       }
       .navigationTitle("Authors")

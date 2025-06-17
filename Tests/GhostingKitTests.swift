@@ -1,5 +1,10 @@
 import Testing
+import Foundation
 @testable import GhostingKit
+
+extension Tag {
+    @Tag static var integration: Self
+}
 
 @Suite struct GhostingKitTests {
   
@@ -12,10 +17,10 @@ import Testing
   ///         The API key used here is for demonstration purposes only and may change in the future.
   ///
   /// - Important: This test requires an active internet connection to succeed.
-  @Test("Fetch posts from Ghost Content API")
+  @Test("Fetch posts from Ghost Content API", .tags(.integration))
   func fetchPosts() async throws {
     // Arrange
-    let ghostingKit = GhostingKit(
+    let ghostingKit = try GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
@@ -31,15 +36,14 @@ import Testing
       #expect(!firstPost.id.isEmpty, "Post ID should not be empty")
       #expect(!firstPost.title.isEmpty, "Post title should not be empty")
       #expect(firstPost.publishedAt != nil, "Published date should not be nil")
-      #expect(firstPost.id == "605360bbce93e1003bd6ddd6", "First post ID should match expected value")
-      #expect(firstPost.title == "Start here for a quick overview of everything you need to know", "First post title should match expected value")
-      #expect(firstPost.slug == "welcome", "First post slug should match expected value")
+      // Note: Specific post IDs and content may change on the demo site
+      // so we only test for general structure and data presence
     }
     
     if let lastPost = postsResponse.posts.last {
-      #expect(lastPost.id == "5979a77cdf093500228e95ea", "Last post ID should match expected value")
-      #expect(lastPost.title == "Gettysburg Address", "Last post title should match expected value")
-      #expect(lastPost.slug == "gettysburg-address", "Last post slug should match expected value")
+      #expect(!lastPost.id.isEmpty, "Last post ID should not be empty")
+      #expect(!lastPost.title.isEmpty, "Last post title should not be empty")
+      #expect(!lastPost.slug.isEmpty, "Last post slug should not be empty")
     }
   }
   
@@ -53,38 +57,30 @@ import Testing
   ///         The API key used here is for demonstration purposes only and may change in the future.
   ///
   /// - Important: This test requires an active internet connection to succeed.
-  @Test("Fetch specific tag by ID from Ghost Content API")
+  @Test("Fetch specific tag by ID from Ghost Content API", .tags(.integration))
   func fetchTagById() async throws {
     // Arrange
-    let ghostingKit = GhostingKit(
+    let ghostingKit = try GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
-    let expectedTagId = "59799bbd6ebb2f00243a33db"
+    let _ = "59799bbd6ebb2f00243a33db"
     
-    // Act
-    let tag = try await ghostingKit.getTag(id: expectedTagId)
+    // First get all tags to find a valid one
+    let tagsResponse = try await ghostingKit.getTags(limit: 1)
+    guard let tag = tagsResponse.tags.first else {
+      #expect(Bool(false), "No tags found on demo site")
+      return
+    }
+    
+    // Act - fetch the same tag by ID
+    let fetchedTag = try await ghostingKit.getTag(id: tag.id)
     
     // Assert
-    #expect(tag.id == expectedTagId, "Tag ID should match the requested ID")
-    #expect(tag.name == "Getting Started", "Tag name should match expected value")
-    #expect(tag.slug == "getting-started", "Tag slug should match expected value")
-    #expect(tag.description == nil, "Tag description should be nil")
-    #expect(tag.featureImage == nil, "Tag feature image should be nil")
-    #expect(tag.visibility == "public", "Tag visibility should be public")
-    #expect(tag.metaTitle == nil, "Tag meta title should be nil")
-    #expect(tag.metaDescription == nil, "Tag meta description should be nil")
-    #expect(tag.ogImage == nil, "Tag OG image should be nil")
-    #expect(tag.ogTitle == nil, "Tag OG title should be nil")
-    #expect(tag.ogDescription == nil, "Tag OG description should be nil")
-    #expect(tag.twitterImage == nil, "Tag Twitter image should be nil")
-    #expect(tag.twitterTitle == nil, "Tag Twitter title should be nil")
-    #expect(tag.twitterDescription == nil, "Tag Twitter description should be nil")
-    #expect(tag.codeinjectionHead == nil, "Tag code injection head should be nil")
-    #expect(tag.codeinjectionFoot == nil, "Tag code injection foot should be nil")
-    #expect(tag.canonicalUrl == nil, "Tag canonical URL should be nil")
-    #expect(tag.accentColor == nil, "Tag accent color should be nil")
-    #expect(tag.url == "https://demo.ghost.io/tag/getting-started/", "Tag URL should match expected value")
+    #expect(fetchedTag.id == tag.id, "Tag ID should match the requested ID")
+    #expect(!fetchedTag.name.isEmpty, "Tag name should not be empty")
+    #expect(!fetchedTag.slug.isEmpty, "Tag slug should not be empty")
+    #expect(fetchedTag.visibility == "public", "Tag visibility should be public")
   }
   
   /// Tests fetching a specific page by its slug from the Ghost Content API using GhostingKit.
@@ -97,50 +93,37 @@ import Testing
   ///         The API key used here is for demonstration purposes only and may change in the future.
   ///
   /// - Important: This test requires an active internet connection to succeed.
-  @Test("Fetch specific page by slug from Ghost Content API")
+  @Test("Fetch specific page by slug from Ghost Content API", .tags(.integration))
   func fetchPageBySlug() async throws {
     // Arrange
-    let ghostingKit = GhostingKit(
+    let ghostingKit = try GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
-    let expectedSlug = "about"
+    // First get all pages to find a valid one
+    let pagesResponse = try await ghostingKit.getPages(limit: 1)
+    guard let page = pagesResponse.pages.first else {
+      #expect(Bool(false), "No pages found on demo site")
+      return
+    }
     
-    // Act
-    let page = try await ghostingKit.getPageBySlug(slug: expectedSlug)
+    // Act - fetch the same page by slug
+    let fetchedPage = try await ghostingKit.getPageBySlug(slug: page.slug)
     
     // Assert
-    #expect(page.slug == expectedSlug, "Page slug should match the requested slug")
-    #expect(page.id == "62416b8cfb349a003cafc2f1", "Page ID should match expected value")
-    #expect(page.uuid == "0ebbf5c2-6014-40d9-a970-bcdca3b869ab", "Page UUID should match expected value")
-    #expect(page.title == "About this theme", "Page title should match expected value")
-    #expect(!page.html.isEmpty, "Page HTML content should not be empty")
-    #expect(page.commentId == "62416b8cfb349a003cafc2f1", "Page comment ID should match expected value")
-    #expect(page.featureImage == nil, "Page feature image should be nil")
-    #expect(page.featured == false, "Page featured status should be false")
-    #expect(page.visibility == "public", "Page visibility should be public")
-    #expect(page.createdAt == "2022-03-28T08:02:20.000+00:00", "Page created at should match expected value")
-    #expect(page.updatedAt == "2022-05-23T10:46:48.000+00:00", "Page updated at should match expected value")
-    #expect(page.publishedAt == "2022-03-29T14:12:53.000+00:00", "Page published at should match expected value")
-    #expect(page.customExcerpt == nil, "Page custom excerpt should be nil")
-    #expect(page.codeinjectionHead == nil, "Page code injection head should be nil")
-    #expect(page.codeinjectionFoot == nil, "Page code injection foot should be nil")
-    #expect(page.customTemplate == nil, "Page custom template should be nil")
-    #expect(page.canonicalUrl == nil, "Page canonical URL should be nil")
-    #expect(page.url == "https://demo.ghost.io/about/", "Page URL should match expected value")
-    #expect(!page.excerpt.isEmpty, "Page excerpt should not be empty")
-    #expect(page.readingTime == 1, "Page reading time should be 1 minute")
-    #expect(page.access == true, "Page access should be true")
-    #expect(page.ogImage == nil, "Page OG image should be nil")
-    #expect(page.ogTitle == nil, "Page OG title should be nil")
-    #expect(page.ogDescription == nil, "Page OG description should be nil")
-    #expect(page.twitterImage == nil, "Page Twitter image should be nil")
-    #expect(page.twitterTitle == nil, "Page Twitter title should be nil")
-    #expect(page.twitterDescription == nil, "Page Twitter description should be nil")
-    #expect(page.metaTitle == nil, "Page meta title should be nil")
-    #expect(page.metaDescription == nil, "Page meta description should be nil")
-    #expect(page.featureImageAlt == nil, "Page feature image alt should be nil")
-    #expect(page.featureImageCaption == nil, "Page feature image caption should be nil")
+    #expect(fetchedPage.slug == page.slug, "Page slug should match the requested slug")
+    #expect(fetchedPage.id == page.id, "Page ID should match expected value")
+    #expect(!fetchedPage.title.isEmpty, "Page title should not be empty")
+    #expect(fetchedPage.html != nil, "Page HTML content should not be nil")
+    #expect(fetchedPage.visibility == "public", "Page visibility should be public")
+    #expect(fetchedPage.access == true, "Page access should be true")
+    
+    // Test date parsing (these are non-optional Date types now)
+    #expect(fetchedPage.createdAt > Date(timeIntervalSince1970: 0), "Created date should be parsed")
+    #expect(fetchedPage.updatedAt > Date(timeIntervalSince1970: 0), "Updated date should be parsed")
+    if let publishedAt = fetchedPage.publishedAt {
+      #expect(publishedAt > Date(timeIntervalSince1970: 0), "Published date should be parsed if present")
+    }
   }
   
   /// Tests fetching a specific author by their ID from the Ghost Content API using GhostingKit.
@@ -153,31 +136,86 @@ import Testing
   ///         The API key used here is for demonstration purposes only and may change in the future.
   ///
   /// - Important: This test requires an active internet connection to succeed.
-  @Test("Fetch specific author by ID from Ghost Content API")
+  @Test("Fetch specific author by ID from Ghost Content API", .tags(.integration))
   func fetchAuthorById() async throws {
     // Arrange
-    let ghostingKit = GhostingKit(
+    let ghostingKit = try GhostingKit(
       adminDomain: "demo.ghost.io",
       apiKey: "22444f78447824223cefc48062"
     )
-    let expectedAuthorId = "5979a779df093500228e9590"
+    // First get all authors to find a valid one
+    let authorsResponse = try await ghostingKit.getAuthors(limit: 1)
+    guard let author = authorsResponse.authors.first else {
+      #expect(Bool(false), "No authors found on demo site")
+      return
+    }
     
-    // Act
-    let author = try await ghostingKit.getAuthor(id: expectedAuthorId)
+    // Act - fetch the same author by ID
+    let fetchedAuthor = try await ghostingKit.getAuthor(id: author.id)
     
     // Assert
-    #expect(author.id == expectedAuthorId, "Author ID should match the requested ID")
-    #expect(author.name == "Abraham Lincoln", "Author name should match expected value")
-    #expect(author.slug == "abe", "Author slug should match expected value")
-    #expect(author.profileImage == "https://demo.ghost.io/content/images/2018/10/abe.jpg", "Author profile image should match expected value")
-    #expect(author.coverImage == nil, "Author cover image should be nil")
-    #expect(author.bio == "I was the 16th president of the USA until I was assassinated in April of 1963.  I led the US through its Civil War - its bloodiest and greatest moral, constitutional and political crisis.", "Author bio should match expected value")
-    #expect(author.website == nil, "Author website should be nil")
-    #expect(author.location == "Kentucky, USA", "Author location should match expected value")
-    #expect(author.facebook == nil, "Author Facebook should be nil")
-    #expect(author.twitter == nil, "Author Twitter should be nil")
-    #expect(author.metaTitle == nil, "Author meta title should be nil")
-    #expect(author.metaDescription == nil, "Author meta description should be nil")
-    #expect(author.url == "https://demo.ghost.io/author/abe/", "Author URL should match expected value")
+    #expect(fetchedAuthor.id == author.id, "Author ID should match the requested ID")
+    #expect(!fetchedAuthor.name.isEmpty, "Author name should not be empty")
+    #expect(!fetchedAuthor.slug.isEmpty, "Author slug should not be empty")
+    #expect(!fetchedAuthor.url.isEmpty, "Author URL should not be empty")
+  }
+  
+  /// Test new API methods
+  @Test("Test new getPost and getPostBySlug methods", .tags(.integration))
+  func testNewPostMethods() async throws {
+    let ghostingKit = try GhostingKit(
+      adminDomain: "demo.ghost.io",
+      apiKey: "22444f78447824223cefc48062"
+    )
+    
+    // Get a post first to test individual post fetching
+    let postsResponse = try await ghostingKit.getPosts(limit: 1)
+    guard let firstPost = postsResponse.posts.first else {
+      #expect(Bool(false), "No posts found on demo site")
+      return
+    }
+    
+    // Test getPost by ID
+    let fetchedPost = try await ghostingKit.getPost(id: firstPost.id)
+    #expect(fetchedPost.id == firstPost.id)
+    #expect(fetchedPost.title == firstPost.title)
+    
+    // Test getPostBySlug
+    let fetchedPostBySlug = try await ghostingKit.getPostBySlug(slug: firstPost.slug)
+    #expect(fetchedPostBySlug.id == firstPost.id)
+    #expect(fetchedPostBySlug.slug == firstPost.slug)
+  }
+  
+  /// Test cancellable requests
+  @Test("Test cancellable requests", .tags(.integration))
+  func testCancellableRequests() async throws {
+    let ghostingKit = try GhostingKit(
+      adminDomain: "demo.ghost.io",
+      apiKey: "22444f78447824223cefc48062"
+    )
+    
+    // Test cancellable posts request
+    let cancellableRequest = await ghostingKit.getPostsCancellable(limit: 5)
+    #expect(!cancellableRequest.taskId.isEmpty, "Task ID should not be empty")
+    
+    // Let the request complete
+    let result = try await cancellableRequest.task.value
+    #expect(!result.posts.isEmpty, "Should have posts")
+  }
+  
+  /// Test pagination helpers
+  @Test("Test pagination with actual API", .tags(.integration))
+  func testPaginationHelpers() async throws {
+    let ghostingKit = try GhostingKit(
+      adminDomain: "demo.ghost.io",
+      apiKey: "22444f78447824223cefc48062"
+    )
+    
+    let response = try await ghostingKit.getPosts(limit: 5, page: 1)
+    if let pagination = response.pagination {
+      #expect(pagination.currentPage == 1)
+      #expect(pagination.pageSize == 5)
+      #expect(pagination.totalCount > 0)
+    }
   }
 }

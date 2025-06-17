@@ -10,11 +10,37 @@ struct TagsView: View {
   var body: some View {
     NavigationView {
       List(tags, id: \.id) { tag in
-        HStack {
-          Text(tag.name)
-          Spacer()
-            Text("\(String(describing: tag.count))")
-            .foregroundColor(.secondary)
+        NavigationLink(destination: TagDetailView(tag: tag, ghostingKit: ghostingKit)) {
+          HStack {
+            VStack(alignment: .leading, spacing: 4) {
+              Text(tag.name)
+                .font(.headline)
+              
+              if let description = tag.description {
+                Text(description)
+                  .font(.caption)
+                  .foregroundColor(.secondary)
+                  .lineLimit(2)
+              }
+            }
+            
+            Spacer()
+            
+            VStack(alignment: .trailing, spacing: 4) {
+              if let count = tag.count?.posts {
+                Text("\(count) posts")
+                  .font(.caption)
+                  .foregroundColor(.secondary)
+              }
+              
+              if let accentColor = tag.accentColor {
+                Circle()
+                  .fill(Color(hex: accentColor) ?? .blue)
+                  .frame(width: 12, height: 12)
+              }
+            }
+          }
+          .padding(.vertical, 4)
         }
       }
       .navigationTitle("Tags")

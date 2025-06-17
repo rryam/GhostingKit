@@ -6,21 +6,22 @@
 	objectVersion = 70;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		0AAEA9E52CC26C5300A1BE30 /* GhostingKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AAEA9E42CC26C5300A1BE30 /* GhostingKit */; };
-		37261ED01DB9F1F8514186F7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23C7352C37C0C7197D1DA38 /* App.swift */; };
-		64F5D3C7C78928A701ACFCDB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE032CC5606C9B91DC5B56 /* ContentView.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		109FD842715CF7259792316C /* Ghosting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghosting.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CAE032CC5606C9B91DC5B56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		843CB4383545B3C551902092 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		A23C7352C37C0C7197D1DA38 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0A22B6922D57431E003096EB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Views/PostDetailView.swift,
+			);
+			target = 12F09A3FE37083A511C002DF /* Ghosting */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0A0C96C52CC2662A003DE4E6 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		0A22B6862D57431E003096EB /* Sources */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0A22B6922D57431E003096EB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Sources; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,7 +29,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AAEA9E52CC26C5300A1BE30 /* GhostingKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,21 +43,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		87DAC291C61C479624697D99 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				0A0C96C52CC2662A003DE4E6 /* Views */,
-				A23C7352C37C0C7197D1DA38 /* App.swift */,
-				4CAE032CC5606C9B91DC5B56 /* ContentView.swift */,
-				843CB4383545B3C551902092 /* Info.plist */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
 		C99E5E2C2854ADF934DA3B52 = {
 			isa = PBXGroup;
 			children = (
-				87DAC291C61C479624697D99 /* Sources */,
+				0A22B6862D57431E003096EB /* Sources */,
 				23273BCC88E3B0A84EAC9013 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,11 +66,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0A0C96C52CC2662A003DE4E6 /* Views */,
+				0A22B6862D57431E003096EB /* Sources */,
 			);
 			name = Ghosting;
 			packageProductDependencies = (
-				0AAEA9E42CC26C5300A1BE30 /* GhostingKit */,
 			);
 			productName = Phantom;
 			productReference = 109FD842715CF7259792316C /* Ghosting.app */;
@@ -106,7 +94,6 @@
 			);
 			mainGroup = C99E5E2C2854ADF934DA3B52;
 			packageReferences = (
-				0AAEA9E32CC26C5300A1BE30 /* XCRemoteSwiftPackageReference "GhostingKit" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -121,8 +108,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37261ED01DB9F1F8514186F7 /* App.swift in Sources */,
-				64F5D3C7C78928A701ACFCDB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,25 +303,6 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		0AAEA9E32CC26C5300A1BE30 /* XCRemoteSwiftPackageReference "GhostingKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rryam/GhostingKit";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		0AAEA9E42CC26C5300A1BE30 /* GhostingKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0AAEA9E32CC26C5300A1BE30 /* XCRemoteSwiftPackageReference "GhostingKit" */;
-			productName = GhostingKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B54B5339E2A187C7A1888953 /* Project object */;
 }
