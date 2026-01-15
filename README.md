@@ -1,5 +1,4 @@
 # GhostingKit
-[![Star History Chart](https://api.star-history.com/svg?repos=rryam/GhostingKit&type=Date)](https://star-history.com/#rryam/GhostingKit&Date)
 
 
 A modern, type-safe Swift library for interacting with the Ghost Content API. GhostingKit provides a comprehensive set of tools for building Ghost-powered applications with features like caching, retry logic, request cancellation, and more.
@@ -369,3 +368,5 @@ This library interacts with the Ghost Content API. For more information about Gh
 - Caching, retry logic, and request cancellation
 - Type-safe models with proper Date handling
 - Secure configuration management
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rryam/GhostingKit&type=Date)](https://star-history.com/#rryam/GhostingKit&Date)
