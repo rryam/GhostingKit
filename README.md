@@ -368,5 +368,3 @@ This library interacts with the Ghost Content API. For more information about Gh
 - Caching, retry logic, and request cancellation
 - Type-safe models with proper Date handling
 - Secure configuration management
-
-[![Star History Chart](https://api.star-history.com/svg?repos=rryam/GhostingKit&type=Date)](https://star-history.com/#rryam/GhostingKit&Date)
